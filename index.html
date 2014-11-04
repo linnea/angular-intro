@@ -18,8 +18,44 @@
 
     </head>
     <body>
-        <main class="container">
-            <h1>Movies from 2014</h1>
+        <main class="container" ng-app="AngularDemo"> <!-- All stuff in main, aAngularDemo should be able to control-->
+            <section ng-controller="HelloController">
+                <h1>Introduce Yourself</h1>
+
+                <p><input type="text" class="form-control" placeholder="enter your first name"
+                          ng-model="person.firstName"/></p>
+
+                <p><input type="text" class="form-control" placeholder="enter your last name"
+                          ng-model="person.lastName"/></p>
+
+                <p>Hello {{person.firstName}} {{person.lastName}}</p>
+                <!-- Created a controller and module, when we add ng-controller: Look for ng-module and {{}}
+                    and evaluate. Looks at the scope, do you have a property. Angular automatically change the data
+                    {{}} puts value in html, every time it changes angular updates the html -->
+            </section>
+            <section ng-controller="MoviesController">
+                <h1>Movies from 2014</h1>
+                <p>{{movies.length}} {{1 == movies.length ? 'movie' : 'movies'}}</p>
+                <!-- {{}} can contain any javascript expression -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Gross Sales</th>
+                            <th>Tickets</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="movie in movies"> <!-- ng-repeat repeats over-->
+                            <td>{{movie.title}}</td>
+                            <td>{{movie.grossSales | currency : '$' : 0}}</td> <!-- pipes through currency filter -->
+                            <td>{{movie.ticketsSold | number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
 
         </main>
 
