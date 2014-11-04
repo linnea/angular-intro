@@ -17,6 +17,21 @@ angular.module('AngularDemo', [])
 
     .controller('MoviesController', function($scope) {
         $scope.movies = movies;
+        $scope.sortCol = 'rank';
+        $scope.sortBy = function(sortCol) {
+            if ($scope.sortCol == sortCol) {
+                $scope.sortReverse = !$scope.sortReverse;
+            } else {
+                $scope.sortCol = sortCol;
+                $scope.sortReverse = false;
+            }
+
+
+        };
+
+        $scope.isSortedBy = function(colName) {
+            return colName == $scope.sortCol;
+        }
     });
 
      // chains methods so you don't have to create global variable

@@ -35,22 +35,31 @@
             </section>
             <section ng-controller="MoviesController">
                 <h1>Movies from 2014</h1>
-                <p>{{movies.length}} {{1 == movies.length ? 'movie' : 'movies'}}</p>
+
+                <p><input type="search" class="form-control" placeholder="search for a title"
+                        ng-model="searchString"/></p>
+                <p>{{filteredMovies.length}} {{1 == filteredMovies.length ? 'movie' : 'movies'}}</p>
                 <!-- {{}} can contain any javascript expression -->
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Gross Sales</th>
-                            <th>Tickets</th>
-                            <th></th>
+                            <th ng-click="sortBy('title')" ng-class="{sorted: isSortedBy('title')}">Title</th> <!-- if
+                            the function returns true, it will add the class sorted -->
+                            <th ng-click="sortBy('grossSales')" ng-class="{sorted: isSortedBy('grossSales')}">Gross Sales</th>
+                            <th ng-click="sortBy('ticketsSold')" ng-class="{sorted: isSortedBy('ticketsSold')}">Tickets</th>
+                            <th ng-click="sortBy('releaseDate')" ng-class="{sorted: isSortedBy('releaseDate')}">Release Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="movie in movies"> <!-- ng-repeat repeats over-->
+                        <tr ng-repeat="movie in filteredMovies = (movies
+                        | filter : {title: searchString}
+                        | orderBy : sortCol : sortReverse)"> <!-- ng-repeat repeats over movies
+                            and filter filters through EVERY attribute, not just name unless you add {attribute: searchString}
+                            for more you can add {title: searchString, studio: 'Disney'} this is AND, what is or?-->
                             <td>{{movie.title}}</td>
                             <td>{{movie.grossSales | currency : '$' : 0}}</td> <!-- pipes through currency filter -->
                             <td>{{movie.ticketsSold | number}}</td>
+                            <td>{{movie.releaseDate | date}}</td>
                         </tr>
                     </tbody>
                 </table>
